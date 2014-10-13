@@ -1,4 +1,5 @@
 iOS/HJNSObjectReleaseDemo
+iOS开发，辅助监控未释放对象，防止内存泄露
 
 更多细节请访问网站
 www.olinone.com

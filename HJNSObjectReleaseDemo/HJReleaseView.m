@@ -17,7 +17,7 @@
         return nil;
     }
     
-    UIImageView * imgView = [UIImageView new];
+    UIImageView *imgView = [UIImageView new];
     [self addSubview:imgView];
     
     return self;

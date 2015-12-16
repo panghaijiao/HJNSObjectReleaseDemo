@@ -15,13 +15,19 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [HJNSObjectRelease createReleaseObserver];
     return YES;
 }
 
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    [HJNSObjectRelease createReleaseObserver];
+}
+
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+//    [HJNSObjectRelease sendReleaseNotice];
+}
+
+- (void)applicationWillResignActive:(UIApplication *)application {
 //    [HJNSObjectRelease sendReleaseNotice];
 }
 

@@ -17,21 +17,17 @@ static NSMutableArray * HJNSObjectArray;
 
 - (instancetype)HJInit
 {
-    if (![self needLaunchFilter] && [self needObserveClass]) {
+    if ([self needObserveClass]) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(HJReceiveReleaseNotice) name:HJNSObjectNoticeName object:nil];
+        objc_setAssociatedObject(self, @selector(needObserveClass), @(YES), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return [self HJInit];
 }
 
-//系统变更需要过滤某些特殊对象
-- (BOOL)needLaunchFilter {
-    NSString *className = NSStringFromClass([self class]);
-    return [className hasPrefix:@"_"];
-}
-
 - (BOOL)needObserveClass
 {
-    return [NSBundle bundleForClass:[self class]] == [NSBundle mainBundle] || [self isKindOfClass:[UIView class]];
+    return [NSBundle bundleForClass:[self class]] == [NSBundle mainBundle] ||
+    [self isKindOfClass:[UIView class]];
 }
 
 - (void)HJReceiveReleaseNotice
@@ -68,7 +64,9 @@ static NSMutableArray * HJNSObjectArray;
 
 - (void)HJRemoveObserver
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:HJNSObjectNoticeName object:nil];
+    if ([objc_getAssociatedObject(self, @selector(needObserveClass)) boolValue]) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:HJNSObjectNoticeName object:nil];
+    }
 }
 
 @end

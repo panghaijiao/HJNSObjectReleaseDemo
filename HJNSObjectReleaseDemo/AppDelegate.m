@@ -24,11 +24,7 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-//    [HJNSObjectRelease sendReleaseNotice];
-}
-
-- (void)applicationWillResignActive:(UIApplication *)application {
-//    [HJNSObjectRelease sendReleaseNotice];
+    [HJNSObjectRelease sendReleaseNotice];
 }
 
 @end
